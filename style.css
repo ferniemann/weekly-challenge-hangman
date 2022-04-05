@@ -1,0 +1,86 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --clr-bg-gray: rgb(210, 215, 218);
+    --clr-bg-gray-transp: rgba(0 0 0 / 0.5);
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem 0;
+}
+
+i {
+    pointer-events: none;
+}
+
+#game-field {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+}
+
+.letter {
+    width: 2rem;
+    aspect-ratio: 1;
+    border-bottom: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+#keyboard {
+    display: grid;
+    grid-template-columns: repeat(20, 4.2vw);
+    gap: 0.125rem;
+    justify-content: center;
+}
+
+.key {
+    background-color: var(--clr-bg-gray);
+    border: 2px solid transparent;
+    border-radius: 0.125rem;
+    text-transform: uppercase;
+    grid-column: span 2;
+    height: 8vw;
+    font-size: calc(0.75rem + 1vw);
+}
+
+.key.correct {
+    background-color: lightgreen;
+}
+
+.key.wrong {
+    background-color: var(--clr-bg-gray-transp);
+    color: white;
+    pointer-events: none;
+}
+
+.key-wide {
+    grid-column: span 3;
+}
+
+@media screen and (min-width: 768px) {
+    #keyboard {
+        grid-template-columns: repeat(20, 2rem);
+    }
+
+    .key {
+        height: 4rem;
+    }
+}
