@@ -1,73 +1,51 @@
+const wordSection = document.querySelector("#word");
 const keyboard = document.querySelector("#keyboard");
-const word = "Haus";
-let markedLetter = "";
+const word = "internet";
 
-renderField();
+renderWord();
 
-keyboard.addEventListener("click", submitPressedKey);
-document.addEventListener("keypress", submitPressedKey);
-
-function renderField() {
-    const field = document.querySelector("#game-field");
-
+function renderWord() {
     for (let i = 0; i < word.length; i++) {
         const container = document.createElement("div");
-        container.classList.add("letter");
-        container.dataset.id = i;
-
-        field.append(container);
+        container.dataset.index = i;
+        wordSection.append(container);
     }
 }
 
-function submitPressedKey(e) {
+keyboard.addEventListener("click", pressKey);
+document.body.addEventListener("keypress", pressKey);
+
+function pressKey(e) {
     if (e.target.dataset.key) {
         const key = e.target.dataset.key;
-
-        if (key === "enter") {
-            checkLetter();
-        } else {
-            markButton(key);
-        }
+        console.log(key);
+        checkForLetter(key);
     } else if (e.key) {
         const key = e.key.toLowerCase();
-
-        if (key === "enter") {
-            checkLetter();
-        } else {
-            markButton(e.key.toLowerCase());
-        }
+        console.log(key);
     }
 }
 
-function markButton(clickedKey) {
-    const buttons = document.querySelectorAll("[data-key]");
-    const clickedButton = document.querySelector(`[data-key="${clickedKey}"]`);
-
-    buttons.forEach((button) => (button.style.borderColor = "transparent"));
-
-    clickedButton.style.borderColor = "gray";
-    markedLetter = clickedKey;
-}
-
-function checkLetter() {
-    const letter = document.querySelector(`[data-key="${markedLetter}"]`);
-    const checkLetter = new RegExp(`[${markedLetter}]`);
-    if (word.toLowerCase().includes(markedLetter)) {
-        let indexes = [];
+function checkForLetter(letter) {
+    if (word.includes(letter)) {
+        const indexes = [];
 
         for (let i = 0; i < word.length; i++) {
-            if (word[i].toLowerCase() === markedLetter) {
+            if (word[i].toLowerCase() === letter) {
                 indexes.push(i);
             }
         }
 
         indexes.forEach((index) => {
-            const field = document.querySelector(`[data-id="${index}"]`);
-            field.innerText = markedLetter;
+            const field = wordSection.querySelector(`[data-index="${index}"]`);
+            field.innerText = letter;
         });
-
-        letter.classList.add("correct");
     } else {
-        letter.classList.add("wrong");
+        console.log("falsch");
     }
 }
+
+// function showLetter(letter) {
+//     const correctLetter = wordSection.querySelector(`[data-letter="${letter}"]`);
+//     correctLetter.innerText = letter;
+// }
